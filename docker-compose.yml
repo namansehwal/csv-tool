@@ -1,0 +1,27 @@
+version: "1.0"
+
+services:
+  backend:
+    build:
+      context: ./server/project
+      dockerfile: Dockerfile
+    container_name: django_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/server/project
+      # - sqlite_data:db.sqlite3
+    depends_on:
+      - client
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: react_client
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./client:/client
+    stdin_open: true
+    tty: true
